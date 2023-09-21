@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Modelo.LoginObject;
+import Modelo.LoginUse;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author danic
@@ -16,6 +20,25 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public void validacionLogin(){
+        LoginObject lg = new LoginObject();
+        LoginUse loginUse = new LoginUse();
+        String usuario = txtUsuario.getText();
+        String password = String.valueOf(txtPass.getPassword());
+        if (!"".equals(usuario) || !"".equals(password))
+        {
+            lg = loginUse.log(usuario, password);
+            if(lg.getCorreo()!= null && lg.getPassword() != null)
+            {
+                Sistema sis = new Sistema();
+                sis.setVisible(true);
+                dispose(); 
+            }else{
+                JOptionPane.showMessageDialog(null, "Correo o contraseña incorrecto.");
+            }
+        }
     }
 
     /**
@@ -64,6 +87,11 @@ public class Login extends javax.swing.JFrame {
         btnIniciarSesion.setBackground(new java.awt.Color(255, 255, 255));
         btnIniciarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/iniciar-sesion.png"))); // NOI18N
         btnIniciarSesion.setBorder(null);
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -147,6 +175,10 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        validacionLogin();
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**
      * @param args the command line arguments

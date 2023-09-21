@@ -995,19 +995,19 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtIDProveedor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtRFCProveedor" min="-2" pref="123" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtNombreProveedor" min="-2" pref="180" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtTelefonoProveedor" min="-2" pref="169" max="-2" attributes="0"/>
+                              <Component id="txtTelefonoProveedor" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtDireccionProveedor" pref="196" max="32767" attributes="0"/>
+                              <Component id="txtDireccionProveedor" pref="188" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1039,7 +1039,7 @@
                           <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtIDProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtRFCProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNombreProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTelefonoProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDireccionProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1065,7 +1065,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Calibri" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="ID:"/>
+                <Property name="text" type="java.lang.String" value="RFC:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
@@ -1100,7 +1100,7 @@
                 <Property name="text" type="java.lang.String" value="Raz&#xf3;n S:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtIDProveedor">
+            <Component class="javax.swing.JTextField" name="txtRFCProveedor">
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombreProveedor">
               <Events>
