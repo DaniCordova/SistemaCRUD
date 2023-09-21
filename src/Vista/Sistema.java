@@ -4,15 +4,19 @@
  */
 package Vista;
 
+import Modelo.ClienteObject;
+import Modelo.ClienteUse;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author danic
  */
 public class Sistema extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Sistema
-     */
+    ClienteObject cl = new ClienteObject();
+    ClienteUse usaCliente = new ClienteUse();
+    
     public Sistema() {
         initComponents();
     }
@@ -329,11 +333,14 @@ public class Sistema extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Calibri Light", 1, 12)); // NOI18N
         jLabel16.setText("Razón Social:");
 
+        txtIDCliente.setEditable(false);
         txtIDCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDClienteActionPerformed(evt);
             }
         });
+
+        txtTelefonoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         tableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -354,6 +361,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnGuardarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Guardar.png"))); // NOI18N
         btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarClienteActionPerformed(evt);
+            }
+        });
 
         btnActualizarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/actualizar-pagina.png"))); // NOI18N
         btnActualizarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -712,6 +724,22 @@ public class Sistema extends javax.swing.JFrame {
     private void txtNombreProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProveedorActionPerformed
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        if (!"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText()))
+        {
+            cl.setNombre(txtNombreCliente.getText());
+            cl.setTelefono(txtTelefonoCliente.getText());
+            cl.setDireccion(txtDireccionCliente.getText());
+            cl.setRazonS(txtRazonSCliente.getText());
+            
+            usaCliente.RegistrarCliente(cl);
+            
+            JOptionPane.showMessageDialog(null, "Se registró el cliente con éxito.");
+        }else{
+            JOptionPane.showMessageDialog(null, "Cliente NO registrado. Revisar los campos.");
+        }
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
     /**
      * @param args the command line arguments
