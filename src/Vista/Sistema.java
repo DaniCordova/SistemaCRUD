@@ -75,6 +75,23 @@ public class Sistema extends javax.swing.JFrame {
         tableProveedor.setModel(tablaModelo);
     }
     
+    public void ListadoDeProductos(){
+        List<ProductoObject> ListarProd = usaProducto.ListarProducto();
+        tablaModelo = (DefaultTableModel) tableProducto.getModel();
+        Object[] obj = new Object[5];
+        
+        for(int i = 0; i < ListarProd.size(); i++){
+            obj[0] = ListarProd.get(i).getSku();
+            obj[1] = ListarProd.get(i).getNombre();
+            obj[2] = ListarProd.get(i).getProveedor();
+            obj[3] = ListarProd.get(i).getStock();
+            obj[4] = ListarProd.get(i).getPrecio();
+            
+            tablaModelo.addRow(obj);
+        }
+        tableProducto.setModel(tablaModelo);
+    }
+    
     public void LimpiarTabla(){
         for (int i = 0; i < tablaModelo.getRowCount(); i++){
             tablaModelo.removeRow(i);
@@ -93,11 +110,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCobrar = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
         btnProveedor = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTabbedGlobal = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -186,11 +203,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Music House");
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Nueva venta.png"))); // NOI18N
-        jButton1.setText("Cobrar");
+        btnCobrar.setBackground(new java.awt.Color(204, 204, 204));
+        btnCobrar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btnCobrar.setForeground(new java.awt.Color(0, 0, 0));
+        btnCobrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Nueva venta.png"))); // NOI18N
+        btnCobrar.setText("Cobrar");
 
         btnCliente.setBackground(new java.awt.Color(204, 204, 204));
         btnCliente.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -225,11 +242,11 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(204, 204, 204));
-        jButton5.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Registro Ventas.png"))); // NOI18N
-        jButton5.setText("Ventas");
+        btnVentas.setBackground(new java.awt.Color(204, 204, 204));
+        btnVentas.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btnVentas.setForeground(new java.awt.Color(0, 0, 0));
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Registro Ventas.png"))); // NOI18N
+        btnVentas.setText("Ventas");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Logo musichouse.png"))); // NOI18N
 
@@ -239,13 +256,13 @@ public class Sistema extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnCobrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(btnCliente)
                 .addGap(111, 111, 111)
                 .addComponent(btnProductos)
                 .addGap(126, 126, 126)
-                .addComponent(jButton5)
+                .addComponent(btnVentas)
                 .addGap(120, 120, 120)
                 .addComponent(btnProveedor)
                 .addGap(21, 21, 21))
@@ -267,9 +284,9 @@ public class Sistema extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCliente)
                     .addComponent(btnProductos)
-                    .addComponent(jButton1)
+                    .addComponent(btnCobrar)
                     .addComponent(btnProveedor)
-                    .addComponent(jButton5))
+                    .addComponent(btnVentas))
                 .addGap(16, 16, 16))
         );
 
@@ -424,7 +441,7 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S", "Fecha de Alta"
+                "ID", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S", "FECHA DE ALTA"
             }
         ));
         tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -550,6 +567,11 @@ public class Sistema extends javax.swing.JFrame {
         btnActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/actualizar-pagina.png"))); // NOI18N
 
         btnEliminarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
+        btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProductoActionPerformed(evt);
+            }
+        });
 
         btnExcelProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/excel.png"))); // NOI18N
 
@@ -558,16 +580,21 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "SKU", "NOMBRE", "STOCK", "PRECIO", "PROVEEDOR"
+                "SKU", "NOMBRE", "PROVEEDOR", "STOCK", "PRECIO"
             }
         ));
+        tableProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductoMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tableProducto);
         if (tableProducto.getColumnModel().getColumnCount() > 0) {
             tableProducto.getColumnModel().getColumn(0).setPreferredWidth(50);
             tableProducto.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tableProducto.getColumnModel().getColumn(2).setPreferredWidth(40);
-            tableProducto.getColumnModel().getColumn(3).setPreferredWidth(50);
-            tableProducto.getColumnModel().getColumn(4).setPreferredWidth(60);
+            tableProducto.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableProducto.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tableProducto.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
         cbxProveedorProducto.setEditable(true);
@@ -617,18 +644,19 @@ public class Sistema extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSKU)
-                    .addComponent(txtSKUProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreProducto)
-                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblProveedorProducto)
-                    .addComponent(lblPrecioProducto)
-                    .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxProveedorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblStockProducto)
-                        .addComponent(txtStockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtStockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblSKU)
+                        .addComponent(txtSKUProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNombreProducto)
+                        .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblProveedorProducto)
+                        .addComponent(lblPrecioProducto)
+                        .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxProveedorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarProducto)
@@ -650,6 +678,11 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "CLIENTE", "VENDEDOR", "TOTAL"
             }
         ));
+        tableVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableVentasMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tableVentas);
         if (tableVentas.getColumnModel().getColumnCount() > 0) {
             tableVentas.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -734,7 +767,7 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "RFC", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S.", "Fecha de Registro"
+                "ID", "RFC", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S.", "FECHA DE REGISTRO"
             }
         ));
         tableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1005,8 +1038,35 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         LimpiarTabla();
+        ListadoDeProductos();
         jTabbedGlobal.setSelectedIndex(2);
     }//GEN-LAST:event_btnProductosActionPerformed
+
+    private void tableVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVentasMouseClicked
+        
+    }//GEN-LAST:event_tableVentasMouseClicked
+
+    private void tableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductoMouseClicked
+        int fila = tableProducto.rowAtPoint(evt.getPoint());
+        txtSKUProducto.setText(tableProducto.getValueAt(fila, 0).toString());
+        txtNombreProducto.setText(tableProducto.getValueAt(fila, 1).toString());
+        cbxProveedorProducto.setSelectedItem(tableProducto.getValueAt(fila, 2).toString());
+        txtStockProducto.setText(tableProducto.getValueAt(fila, 3).toString());
+        txtPrecioProducto.setText(tableProducto.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tableProductoMouseClicked
+
+    private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
+        if(!"".equals(txtSKUProducto.getText())){
+            int q = JOptionPane.showConfirmDialog(null, "¿Quieres eliminar al producto?");
+            if(q == 0){
+                String sku = txtSKUProducto.getText();
+                usaProducto.EliminarProducto(sku);
+                LimpiarTabla();
+                ListadoDeProductos();
+                LimpiarTxtsProductos();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
@@ -1023,6 +1083,14 @@ public class Sistema extends javax.swing.JFrame {
         txtTelefonoProveedor.setText("");
         txtDireccionProveedor.setText("");
         txtRazonSProveedor.setText("");
+    }
+    
+    private void LimpiarTxtsProductos(){
+        txtSKUCobrar.setText("");
+        txtNombreCliente.setText("");
+        cbxProveedorProducto.setSelectedItem(null);
+        txtStockProducto.setText("");
+        txtPrecioProducto.setText("");
     }
     
     /**
@@ -1065,6 +1133,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnActualizarProducto;
     private javax.swing.JButton btnActualizarProveedor;
     private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnEliminarCliente;
     private javax.swing.JButton btnEliminarCobrar;
     private javax.swing.JButton btnEliminarProducto;
@@ -1076,9 +1145,8 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnPdfVentas;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnVentas;
     private javax.swing.JComboBox<String> cbxProveedorProducto;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
