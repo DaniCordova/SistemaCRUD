@@ -49,7 +49,26 @@ public class Sistema extends javax.swing.JFrame {
         tableCliente.setModel(tablaModelo);
     }
     
-    public void LimpiarTablaClientes(){
+    public void ListadoDeProveedores(){
+        List<ProveedorObject> ListarPr = usaProveedor.ListarProveedor();
+        tablaModelo = (DefaultTableModel) tableProveedor.getModel();
+        Object[] obj = new Object[7];
+        
+        for(int i = 0; i < ListarPr.size(); i++){
+            obj[0] = ListarPr.get(i).getId();
+            obj[1] = ListarPr.get(i).getRfc();
+            obj[2] = ListarPr.get(i).getNombre();
+            obj[3] = ListarPr.get(i).getTelefono();
+            obj[4] = ListarPr.get(i).getDireccion();
+            obj[5] = ListarPr.get(i).getRazonSocial();
+            obj[6] = ListarPr.get(i).getFechaAlta();
+            
+            tablaModelo.addRow(obj);
+        }
+        tableProveedor.setModel(tablaModelo);
+    }
+    
+    public void LimpiarTabla(){
         for (int i = 0; i < tablaModelo.getRowCount(); i++){
             tablaModelo.removeRow(i);
             i = i-1;
@@ -69,11 +88,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnProveedor = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTabbedClientes = new javax.swing.JTabbedPane();
+        jTabbedGlobal = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -177,11 +196,16 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(204, 204, 204));
-        jButton3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Proveedor.png"))); // NOI18N
-        jButton3.setText("Proveedor");
+        btnProveedor.setBackground(new java.awt.Color(204, 204, 204));
+        btnProveedor.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btnProveedor.setForeground(new java.awt.Color(0, 0, 0));
+        btnProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Proveedor.png"))); // NOI18N
+        btnProveedor.setText("Proveedor");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -211,7 +235,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(126, 126, 126)
                 .addComponent(jButton5)
                 .addGap(120, 120, 120)
-                .addComponent(jButton3)
+                .addComponent(btnProveedor)
                 .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel2)
@@ -232,7 +256,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(btnCliente)
                     .addComponent(jButton4)
                     .addComponent(jButton1)
-                    .addComponent(jButton3)
+                    .addComponent(btnProveedor)
                     .addComponent(jButton5))
                 .addGap(16, 16, 16))
         );
@@ -355,7 +379,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedClientes.addTab("tab1", jPanel2);
+        jTabbedGlobal.addTab("tab1", jPanel2);
 
         lblIDCliente.setFont(new java.awt.Font("Calibri Light", 1, 12)); // NOI18N
         lblIDCliente.setText("ID:");
@@ -492,7 +516,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedClientes.addTab("tab2", jPanel3);
+        jTabbedGlobal.addTab("tab2", jPanel3);
 
         jLabel22.setText("SKU");
 
@@ -596,7 +620,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedClientes.addTab("tab4", jPanel5);
+        jTabbedGlobal.addTab("tab4", jPanel5);
 
         tableVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -638,7 +662,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedClientes.addTab("tab5", jPanel6);
+        jTabbedGlobal.addTab("tab5", jPanel6);
 
         jLabel17.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel17.setText("RFC:");
@@ -774,9 +798,9 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedClientes.addTab("tab3", jPanel4);
+        jTabbedGlobal.addTab("tab3", jPanel4);
 
-        getContentPane().add(jTabbedClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1080, 440));
+        getContentPane().add(jTabbedGlobal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1080, 440));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -800,7 +824,7 @@ public class Sistema extends javax.swing.JFrame {
             usaCliente.RegistrarCliente(cl);
             
             JOptionPane.showMessageDialog(null, "Se registró el cliente con éxito.");
-            LimpiarTablaClientes();
+            LimpiarTabla();
             ListadoDeClientes();
             LimpiarTxtsCliente();
         }else{
@@ -809,9 +833,9 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        LimpiarTablaClientes();
+        LimpiarTabla();
         ListadoDeClientes();
-        jTabbedClientes.setSelectedIndex(1);
+        jTabbedGlobal.setSelectedIndex(1);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
@@ -829,7 +853,7 @@ public class Sistema extends javax.swing.JFrame {
             if(q == 0){
                 int id = Integer.parseInt(txtIDCliente.getText());
                 usaCliente.EliminarCliente(id);
-                LimpiarTablaClientes();
+                LimpiarTabla();
                 ListadoDeClientes();
                 LimpiarTxtsCliente();
             }
@@ -849,7 +873,7 @@ public class Sistema extends javax.swing.JFrame {
                 
                 usaCliente.ModificarCliente(cl);
                 
-                LimpiarTablaClientes();
+                LimpiarTabla();
                 LimpiarTxtsCliente();
                 ListadoDeClientes();
             }else{
@@ -871,6 +895,12 @@ public class Sistema extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El proveedor NO se registró. Favor de revisar los campos.");
         }
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        LimpiarTabla();
+        ListadoDeProveedores();
+        jTabbedGlobal.setSelectedIndex(4);
+    }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
@@ -929,9 +959,9 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarProducto;
     private javax.swing.JButton btnGuardarProveedor;
     private javax.swing.JButton btnPdfVentas;
+    private javax.swing.JButton btnProveedor;
     private javax.swing.JComboBox<String> cbxProveedorProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -966,7 +996,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedClientes;
+    private javax.swing.JTabbedPane jTabbedGlobal;
     private javax.swing.JLabel labelTotal;
     private javax.swing.JLabel lblDireccionCliente;
     private javax.swing.JLabel lblIDCliente;

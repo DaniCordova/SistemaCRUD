@@ -11,17 +11,19 @@ public class ProveedorObject {
     private String telefono;
     private String direccion;
     private String razonSocial;
+    private String fechaAlta;
 
     public ProveedorObject() {
     }
 
-    public ProveedorObject(int id, String rfc, String nombre, String telefono, String direccion, String razonSocial) {
+    public ProveedorObject(int id, String rfc, String nombre, String telefono, String direccion, String razonSocial, String fechaAlta) {
         this.id = id;
         this.rfc = rfc;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
         this.razonSocial = razonSocial;
+        this.fechaAlta = fechaAlta;
     }
 
     public int getId() {
@@ -70,6 +72,14 @@ public class ProveedorObject {
 
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
+    }
+    
+    public String getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(String fechaAlta) {
+        this.fechaAlta = fechaAlta;
     }
     
     
