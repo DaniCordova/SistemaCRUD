@@ -63,4 +63,24 @@ public class ClienteUse {
         }
         return ListaCliente;
     }
+    
+    public boolean EliminarCliente(int idCliente){
+        String sql = "DELETE FROM musichouse.clientes where id = ?";
+        
+        try {
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, idCliente);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try {
+                con.close();
+            } catch (Exception e2) {
+                System.out.println(e2.toString());
+            }
+        }
+    }
 }

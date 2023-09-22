@@ -22,6 +22,7 @@ public class Sistema extends javax.swing.JFrame {
     
     public Sistema() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void ListadoDeClientes(){
@@ -367,6 +368,8 @@ public class Sistema extends javax.swing.JFrame {
         jLabel16.setText("Razón Social:");
 
         txtIDCliente.setEditable(false);
+        txtIDCliente.setBackground(new java.awt.Color(204, 204, 204));
+        txtIDCliente.setFocusable(false);
         txtIDCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDClienteActionPerformed(evt);
@@ -383,6 +386,11 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S", "Fecha de Alta"
             }
         ));
+        tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableClienteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableCliente);
         if (tableCliente.getColumnModel().getColumnCount() > 0) {
             tableCliente.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -406,6 +414,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
         btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarClienteActionPerformed(evt);
+            }
+        });
 
         btnNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/usuario.png"))); // NOI18N
         btnNuevoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -772,6 +785,7 @@ public class Sistema extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Se registró el cliente con éxito.");
             LimpiarTablaClientes();
             ListadoDeClientes();
+            LimpiarTxtsCliente();
         }else{
             JOptionPane.showMessageDialog(null, "Cliente NO registrado. Revisar los campos.");
         }
@@ -783,6 +797,36 @@ public class Sistema extends javax.swing.JFrame {
         jTabbedClientes.setSelectedIndex(1);
     }//GEN-LAST:event_btnClienteActionPerformed
 
+    private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
+        int fila = tableCliente.rowAtPoint(evt.getPoint());
+        txtIDCliente.setText(tableCliente.getValueAt(fila, 0).toString());
+        txtNombreCliente.setText(tableCliente.getValueAt(fila, 1).toString());
+        txtTelefonoCliente.setText(tableCliente.getValueAt(fila, 2).toString());
+        txtDireccionCliente.setText(tableCliente.getValueAt(fila, 3).toString());
+        txtRazonSCliente.setText(tableCliente.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tableClienteMouseClicked
+
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        if(!"".equals(txtIDCliente.getText())){
+            int q = JOptionPane.showConfirmDialog(null, "¿Quieres eliminar al cliente?");
+            if(q == 0){
+                int id = Integer.parseInt(txtIDCliente.getText());
+                usaCliente.EliminarCliente(id);
+                LimpiarTablaClientes();
+                ListadoDeClientes();
+                LimpiarTxtsCliente();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void LimpiarTxtsCliente(){
+        txtIDCliente.setText("");
+        txtNombreCliente.setText("");
+        txtTelefonoCliente.setText("");
+        txtDireccionCliente.setText("");
+        txtRazonSCliente.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
