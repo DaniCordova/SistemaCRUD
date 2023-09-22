@@ -411,6 +411,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnActualizarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/actualizar-pagina.png"))); // NOI18N
         btnActualizarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarClienteActionPerformed(evt);
+            }
+        });
 
         btnEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
         btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -422,6 +427,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/usuario.png"))); // NOI18N
         btnNuevoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -818,6 +828,32 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+
+    private void btnActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarClienteActionPerformed
+        if("".equals(txtIDCliente.getText())){
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente.");
+        }else{
+            if(!"".equals(txtNombreCliente.getText()) && !"".equals(txtTelefonoCliente.getText()) && !"".equals(txtDireccionCliente.getText()) && !"".equals(txtRazonSCliente.getText())){
+                cl.setId(Integer.parseInt(txtIDCliente.getText()));
+                cl.setNombre(txtNombreCliente.getText());
+                cl.setTelefono(txtTelefonoCliente.getText());
+                cl.setDireccion(txtDireccionCliente.getText());
+                cl.setRazonS(txtRazonSCliente.getText());
+                
+                usaCliente.ModificarCliente(cl);
+                
+                LimpiarTablaClientes();
+                LimpiarTxtsCliente();
+                ListadoDeClientes();
+            }else{
+                JOptionPane.showMessageDialog(null, "El cliente NO se actualizó. Favor de revisar los campos.");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarClienteActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");

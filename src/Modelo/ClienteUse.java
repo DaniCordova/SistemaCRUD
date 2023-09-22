@@ -83,4 +83,27 @@ public class ClienteUse {
             }
         }
     }
+    
+    public boolean ModificarCliente(ClienteObject cl){
+        String sql = "UPDATE musichouse.clientes SET nombre = ?, telefono = ?, direccion = ?, razonsocial = ? WHERE id = ?";
+        try {
+            statement = con.prepareStatement(sql);
+            statement.setString(1, cl.getNombre());
+            statement.setString(2, cl.getTelefono());
+            statement.setString(3, cl.getDireccion());
+            statement.setString(4, cl.getRazonS());
+            statement.setInt(5, cl.getId());
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException e2) {
+                System.out.println(e2.toString());
+            }
+        }
+    }
 }
