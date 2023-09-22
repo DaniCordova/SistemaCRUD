@@ -67,4 +67,24 @@ public class ProveedorUse {
         }
         return ListaProveedor;
     }
+    
+    public boolean EliminarProveedor(int idProveedor){
+        String sql = "DELETE FROM musichouse.proveedores where id = ?";
+        
+        try {
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, idProveedor);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try {
+                con.close();
+            } catch (Exception e2) {
+                System.out.println(e2.toString());
+            }
+        }
+    }
 }

@@ -698,6 +698,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnEliminarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
         btnEliminarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProveedorActionPerformed(evt);
+            }
+        });
 
         tableProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -707,6 +712,11 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "RFC", "NOMBRE", "TELÉFONO", "DIRECCIÓN", "RAZÓN S.", "Fecha de Registro"
             }
         ));
+        tableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProveedorMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tableProveedor);
         if (tableProveedor.getColumnModel().getColumnCount() > 0) {
             tableProveedor.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -891,6 +901,9 @@ public class Sistema extends javax.swing.JFrame {
             pr.setDireccion(txtDireccionProveedor.getText());
             pr.setRazonSocial(txtRazonSProveedor.getText());
             usaProveedor.RegistroDeProveedor(pr);
+            LimpiarTabla();
+            ListadoDeProveedores();
+            LimpiarTxtsProveedor();
         }else{
             JOptionPane.showMessageDialog(null, "El proveedor NO se registró. Favor de revisar los campos.");
         }
@@ -902,12 +915,44 @@ public class Sistema extends javax.swing.JFrame {
         jTabbedGlobal.setSelectedIndex(4);
     }//GEN-LAST:event_btnProveedorActionPerformed
 
+    private void tableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedorMouseClicked
+        int fila = tableProveedor.rowAtPoint(evt.getPoint());
+        txtIDProveedor.setText(tableProveedor.getValueAt(fila, 0).toString());
+        txtRFCProveedor.setText(tableProveedor.getValueAt(fila, 1).toString());
+        txtNombreProveedor.setText(tableProveedor.getValueAt(fila, 2).toString());
+        txtTelefonoProveedor.setText(tableProveedor.getValueAt(fila, 3).toString());
+        txtDireccionProveedor.setText(tableProveedor.getValueAt(fila, 4).toString());
+        txtRazonSProveedor.setText(tableProveedor.getValueAt(fila, 5).toString());
+    }//GEN-LAST:event_tableProveedorMouseClicked
+
+    private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
+        if(!"".equals(txtIDProveedor.getText())){
+            int q = JOptionPane.showConfirmDialog(null, "¿Quieres eliminar al proveedor?");
+            if(q == 0){
+                int id = Integer.parseInt(txtIDProveedor.getText());
+                usaProveedor.EliminarProveedor(id);
+                LimpiarTabla();
+                ListadoDeProveedores();
+                LimpiarTxtsProveedor();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarProveedorActionPerformed
+
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
         txtNombreCliente.setText("");
         txtTelefonoCliente.setText("");
         txtDireccionCliente.setText("");
         txtRazonSCliente.setText("");
+    }
+    
+    private void LimpiarTxtsProveedor(){
+        txtIDProveedor.setText("");
+        txtRFCProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
+        txtRazonSProveedor.setText("");
     }
     
     /**
