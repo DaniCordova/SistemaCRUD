@@ -695,6 +695,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnActualizarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/actualizar-pagina.png"))); // NOI18N
         btnActualizarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProveedorActionPerformed(evt);
+            }
+        });
 
         btnEliminarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
         btnEliminarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -937,6 +942,29 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
+
+    private void btnActualizarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProveedorActionPerformed
+        if("".equals(txtIDProveedor.getText())){
+            JOptionPane.showMessageDialog(null, "Seleccione un proveedor.");
+        }else{
+            if(!"".equals(txtRFCProveedor.getText()) && !"".equals(txtNombreProveedor.getText()) && !"".equals(txtTelefonoProveedor.getText()) && !"".equals(txtDireccionProveedor.getText()) && !"".equals(txtRazonSProveedor.getText())){
+                pr.setId(Integer.parseInt(txtIDProveedor.getText()));
+                pr.setRfc(txtRFCProveedor.getText());
+                pr.setNombre(txtNombreProveedor.getText());
+                pr.setTelefono(txtTelefonoProveedor.getText());
+                pr.setDireccion(txtDireccionProveedor.getText());
+                pr.setRazonSocial(txtRazonSProveedor.getText());
+
+                usaProveedor.ModificarProveedor(pr);
+                
+                LimpiarTabla();
+                LimpiarTxtsProveedor();
+                ListadoDeProveedores();
+            }else{
+                JOptionPane.showMessageDialog(null, "El proveedor NO se actualizó. Favor de revisar los campos.");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarProveedorActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");

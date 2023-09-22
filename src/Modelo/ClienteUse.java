@@ -101,8 +101,8 @@ public class ClienteUse {
         }finally{
             try {
                 con.close();
-            } catch (SQLException e2) {
-                System.out.println(e2.toString());
+            } catch (SQLException e) {
+                System.out.println(e.toString());
             }
         }
     }

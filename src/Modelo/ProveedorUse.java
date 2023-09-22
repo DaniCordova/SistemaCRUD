@@ -87,4 +87,28 @@ public class ProveedorUse {
             }
         }
     }
+    
+    public boolean ModificarProveedor(ProveedorObject pr){
+        String sql = "UPDATE musichouse.proveedores SET rfc = ?, nombre = ?, telefono = ?, direccion = ?, razonsocial = ? WHERE id = ?";
+        try {
+            statement = con.prepareStatement(sql);
+            statement.setString(1, pr.getRfc());
+            statement.setString(2, pr.getNombre());
+            statement.setString(3, pr.getTelefono());
+            statement.setString(4, pr.getDireccion());
+            statement.setString(5, pr.getRazonSocial());
+            statement.setInt(6, pr.getId());
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
+        }
+    }
 }
