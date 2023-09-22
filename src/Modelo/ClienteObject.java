@@ -14,16 +14,18 @@ public class ClienteObject {
     private String telefono;
     private String direccion;
     private String razonS;
+    private String fechaAlta;
 
     public ClienteObject() {
     }
 
-    public ClienteObject(int id, String nombre, String telefono, String direccion, String razonS) {
+    public ClienteObject(int id, String nombre, String telefono, String direccion, String razonS, String fechaAlta) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
         this.razonS = razonS;
+        this.fechaAlta = fechaAlta;
     }
 
     public int getId() {
@@ -65,6 +67,16 @@ public class ClienteObject {
     public void setRazonS(String razonS) {
         this.razonS = razonS;
     }
+    
+    public String getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(String fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+    
+    
     
     
     
