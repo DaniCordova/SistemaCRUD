@@ -10,6 +10,7 @@ import Modelo.ProductoObject;
 import Modelo.ProductoUse;
 import Modelo.ProveedorObject;
 import Modelo.ProveedorUse;
+import Reportes.Excel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -579,6 +580,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnExcelProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/excel.png"))); // NOI18N
+        btnExcelProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcelProductoActionPerformed(evt);
+            }
+        });
 
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1094,6 +1100,10 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
+
+    private void btnExcelProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelProductoActionPerformed
+        Excel.InventarioDeProductos();
+    }//GEN-LAST:event_btnExcelProductoActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
