@@ -95,4 +95,28 @@ public class ProductoUse {
             }
         }
     }
+    
+    public boolean ModificarProductos(ProductoObject prod){
+        String sql = "UPDATE musichouse.productos SET sku = ?, nombre = ?, proveedor = ?, stock = ?, precio = ? WHERE sku = ?";
+        try {
+            statement = con.prepareStatement(sql);
+            statement.setString(1, prod.getSku());
+            statement.setString(2, prod.getNombre());
+            statement.setString(3, prod.getProveedor());
+            statement.setInt(4, prod.getStock());
+            statement.setDouble(5, prod.getPrecio());
+            statement.setString(6, prod.getSku());
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
+        }
+    }   
 }

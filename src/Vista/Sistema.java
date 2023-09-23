@@ -565,6 +565,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/actualizar-pagina.png"))); // NOI18N
+        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProductoActionPerformed(evt);
+            }
+        });
 
         btnEliminarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/basura.png"))); // NOI18N
         btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -1068,6 +1073,28 @@ public class Sistema extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
+    private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
+        if("".equals(txtSKUProducto.getText())){
+            JOptionPane.showMessageDialog(null, "Seleccione un producto.");
+        }else{
+            if(!"".equals(txtNombreProducto.getText()) && !"".equals(cbxProveedorProducto.getSelectedItem().toString()) && !"".equals(txtStockProducto.getText()) && !"".equals(txtPrecioProducto.getText())){
+                prod.setSku(txtSKUProducto.getText());
+                prod.setNombre(txtNombreProducto.getText());
+                prod.setProveedor(cbxProveedorProducto.getSelectedItem().toString());
+                prod.setStock(Integer.parseInt(txtStockProducto.getText()));
+                prod.setPrecio(Double.parseDouble(txtPrecioProducto.getText()));
+
+                usaProducto.ModificarProductos(prod);
+                
+                LimpiarTabla();
+                LimpiarTxtsProductos();
+                ListadoDeProductos();
+            }else{
+                JOptionPane.showMessageDialog(null, "El producto NO se actualizó. Favor de revisar los campos.");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarProductoActionPerformed
+
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
         txtNombreCliente.setText("");
@@ -1086,8 +1113,8 @@ public class Sistema extends javax.swing.JFrame {
     }
     
     private void LimpiarTxtsProductos(){
-        txtSKUCobrar.setText("");
-        txtNombreCliente.setText("");
+        txtSKUProducto.setText("");
+        txtNombreProducto.setText("");
         cbxProveedorProducto.setSelectedItem(null);
         txtStockProducto.setText("");
         txtPrecioProducto.setText("");
