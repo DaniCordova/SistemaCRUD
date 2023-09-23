@@ -11,6 +11,7 @@ import Modelo.ProductoUse;
 import Modelo.ProveedorObject;
 import Modelo.ProveedorUse;
 import Reportes.Excel;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -137,7 +138,7 @@ public class Sistema extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         labelTotal = new javax.swing.JLabel();
         txtIDClienteCobrar = new javax.swing.JTextField();
-        txtNombreCobrar = new javax.swing.JTextField();
+        txtNombreClienteCobrar = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         lblIDCliente = new javax.swing.JLabel();
         lblNombreCliente = new javax.swing.JLabel();
@@ -303,6 +304,16 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel7.setText("Stock");
 
+        txtSKUCobrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSKUCobrarKeyPressed(evt);
+            }
+        });
+
+        txtStockCobrar.setEditable(false);
+        txtStockCobrar.setBackground(new java.awt.Color(204, 204, 204));
+        txtStockCobrar.setFocusable(false);
+
         btnEliminarCobrar.setText("Eliminar");
 
         tableCobrar.setModel(new javax.swing.table.DefaultTableModel(
@@ -329,7 +340,7 @@ public class Sistema extends javax.swing.JFrame {
 
         labelTotal.setText("---");
 
-        txtNombreCobrar.setEditable(false);
+        txtNombreClienteCobrar.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -361,7 +372,7 @@ public class Sistema extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombreClienteCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
@@ -405,7 +416,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(labelTotal)
                     .addComponent(txtIDClienteCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreClienteCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -642,7 +653,7 @@ public class Sistema extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(btnGuardarProducto)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnActualizarProducto)
+                                .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEliminarProducto)
                                 .addGap(18, 18, 18)
@@ -669,11 +680,12 @@ public class Sistema extends javax.swing.JFrame {
                         .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbxProveedorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardarProducto)
-                    .addComponent(btnActualizarProducto)
-                    .addComponent(btnEliminarProducto)
-                    .addComponent(btnExcelProducto))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardarProducto)
+                        .addComponent(btnEliminarProducto)
+                        .addComponent(btnExcelProducto))
+                    .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1105,6 +1117,29 @@ public class Sistema extends javax.swing.JFrame {
         Excel.InventarioDeProductos();
     }//GEN-LAST:event_btnExcelProductoActionPerformed
 
+    private void txtSKUCobrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSKUCobrarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(!"".equals(txtSKUCobrar.getText())){
+                String sku = txtSKUCobrar.getText();
+                prod = usaProducto.BuscarProducto(sku);
+                if(prod.getNombre() != null){
+                    txtProductoCobrar.setText(""+prod.getNombre());
+                    txtStockCobrar.setText(""+prod.getStock());
+                    txtPrecioCobrar.setText(""+prod.getPrecio());
+                    txtCantidadCobrar.requestFocus();
+                }else{
+                    txtProductoCobrar.setText("");
+                    txtStockCobrar.setText("");
+                    txtPrecioCobrar.setText("");
+                    txtSKUCobrar.requestFocus();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Favor de capturar el SKU. Campo vacío.");
+                txtSKUCobrar.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txtSKUCobrarKeyPressed
+
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
         txtNombreCliente.setText("");
@@ -1235,7 +1270,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtIDClienteCobrar;
     private javax.swing.JTextField txtIDProveedor;
     private javax.swing.JTextField txtNombreCliente;
-    private javax.swing.JTextField txtNombreCobrar;
+    private javax.swing.JTextField txtNombreClienteCobrar;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtNombreProveedor;
     private javax.swing.JTextField txtPrecioCobrar;

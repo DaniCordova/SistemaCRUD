@@ -118,5 +118,26 @@ public class ProductoUse {
                 System.out.println(e.toString());
             }
         }
-    }   
+    }
+    
+    public ProductoObject BuscarProducto(String sku){
+        ProductoObject prod = new ProductoObject();
+        String sql = "SELECT * FROM musichouse.productos WHERE sku = ?";
+        try {
+            con = cn.getConnection();
+            statement = con.prepareStatement(sql);
+            statement.setString(1, sku);
+            
+            resultado = statement.executeQuery();
+            
+            if (resultado.next()) {
+                prod.setNombre(resultado.getString("nombre"));
+                prod.setPrecio(resultado.getDouble("precio"));
+                prod.setStock(resultado.getInt("stock"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return prod;
+    }
 }

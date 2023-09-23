@@ -251,7 +251,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtNombreCobrar" min="-2" pref="246" max="-2" attributes="0"/>
+                              <Component id="txtNombreClienteCobrar" min="-2" pref="246" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -302,7 +302,7 @@
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtIDClienteCobrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNombreCobrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombreClienteCobrar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -336,6 +336,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSKUCobrar">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSKUCobrarKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtProductoCobrar">
             </Component>
@@ -344,6 +347,13 @@
             <Component class="javax.swing.JTextField" name="txtPrecioCobrar">
             </Component>
             <Component class="javax.swing.JTextField" name="txtStockCobrar">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                </Property>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnEliminarCobrar">
               <Properties>
@@ -426,7 +436,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtIDClienteCobrar">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtNombreCobrar">
+            <Component class="javax.swing.JTextField" name="txtNombreClienteCobrar">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
@@ -724,7 +734,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="btnGuardarProducto" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnActualizarProducto" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnActualizarProducto" min="-2" pref="30" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnEliminarProducto" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -760,11 +770,13 @@
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnGuardarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnActualizarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnEliminarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnExcelProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnGuardarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnExcelProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="btnActualizarProducto" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane4" min="-2" pref="330" max="-2" attributes="0"/>
