@@ -12,6 +12,7 @@ import Modelo.ProveedorObject;
 import Modelo.ProveedorUse;
 import Reportes.Excel;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +33,8 @@ public class Sistema extends javax.swing.JFrame {
     ProductoUse usaProducto = new ProductoUse();
     DefaultTableModel tablaModelo = new DefaultTableModel();
     
+    int item;
+    double total = 0.00;
     
     public Sistema() {
         initComponents();
@@ -136,7 +139,7 @@ public class Sistema extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        labelTotal = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         txtIDClienteCobrar = new javax.swing.JTextField();
         txtNombreClienteCobrar = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -310,6 +313,12 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
+        txtCantidadCobrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadCobrarKeyPressed(evt);
+            }
+        });
+
         txtStockCobrar.setEditable(false);
         txtStockCobrar.setBackground(new java.awt.Color(204, 204, 204));
         txtStockCobrar.setFocusable(false);
@@ -321,15 +330,16 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "SKU", "PRODUCTO", "CANTIDAD", "PRECIO", "TOTAL"
+                "#", "SKU", "PRODUCTO", "PRECIO", "CANTIDAD", "TOTAL"
             }
         ));
         jScrollPane1.setViewportView(tableCobrar);
         if (tableCobrar.getColumnModel().getColumnCount() > 0) {
-            tableCobrar.getColumnModel().getColumn(0).setPreferredWidth(30);
-            tableCobrar.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tableCobrar.getColumnModel().getColumn(2).setPreferredWidth(30);
+            tableCobrar.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tableCobrar.getColumnModel().getColumn(1).setPreferredWidth(30);
+            tableCobrar.getColumnModel().getColumn(2).setPreferredWidth(100);
             tableCobrar.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableCobrar.getColumnModel().getColumn(4).setPreferredWidth(30);
         }
 
         jLabel8.setText("ID Cliente:");
@@ -338,7 +348,7 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel10.setText("Total:");
 
-        labelTotal.setText("---");
+        lblTotal.setText("---");
 
         txtNombreClienteCobrar.setEditable(false);
 
@@ -376,7 +386,7 @@ public class Sistema extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addComponent(labelTotal)
+                        .addComponent(lblTotal)
                         .addGap(127, 127, 127))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -414,10 +424,10 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
-                    .addComponent(labelTotal)
+                    .addComponent(lblTotal)
                     .addComponent(txtIDClienteCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreClienteCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab1", jPanel2);
@@ -554,7 +564,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(btnEliminarCliente))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab2", jPanel3);
@@ -688,7 +698,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab4", jPanel5);
@@ -735,7 +745,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addComponent(btnPdfVentas)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab5", jPanel6);
@@ -886,12 +896,12 @@ public class Sistema extends javax.swing.JFrame {
                         .addComponent(txtIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab3", jPanel4);
 
-        getContentPane().add(jTabbedGlobal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1080, 440));
+        getContentPane().add(jTabbedGlobal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1080, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1128,9 +1138,7 @@ public class Sistema extends javax.swing.JFrame {
                     txtPrecioCobrar.setText(""+prod.getPrecio());
                     txtCantidadCobrar.requestFocus();
                 }else{
-                    txtProductoCobrar.setText("");
-                    txtStockCobrar.setText("");
-                    txtPrecioCobrar.setText("");
+                    LimpiarTxtsCobrar();
                     txtSKUCobrar.requestFocus();
                 }
             }else{
@@ -1139,6 +1147,57 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtSKUCobrarKeyPressed
+
+    private void txtCantidadCobrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadCobrarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(!"".equals(txtCantidadCobrar.getText())){
+                String sku = txtSKUCobrar.getText();
+                String producto = txtProductoCobrar.getText();
+                int cantidad = Integer.parseInt(txtCantidadCobrar.getText());
+                double precio = Double.parseDouble(txtPrecioCobrar.getText());
+                double total = cantidad * precio;
+                int stock = Integer.parseInt(txtStockCobrar.getText());
+                
+                if(stock >= cantidad){
+                    item = item + 1;
+                    tablaModelo = (DefaultTableModel) tableCobrar.getModel();
+                    
+                    for(int i = 0; i < tableCobrar.getRowCount(); i++){
+                        if(tableCobrar.getValueAt(i, 1).equals(txtProductoCobrar.getText())){
+                            JOptionPane.showMessageDialog(null, "El producto ya está agregado.");
+                            return;
+                        }
+                    }
+                    
+                    ArrayList lista = new ArrayList();
+                    lista.add(item);
+                    lista.add(sku);
+                    lista.add(producto);
+                    lista.add(precio);
+                    lista.add(cantidad);
+                    lista.add(total);
+                    
+                    Object[] obj = new Object[6];
+                    obj[0] = lista.get(0);
+                    obj[1] = lista.get(1);
+                    obj[2] = lista.get(2);
+                    obj[3] = lista.get(3);
+                    obj[4] = lista.get(4);
+                    obj[5] = lista.get(5);
+                    
+                    tablaModelo.addRow(obj);
+                    tableCobrar.setModel(tablaModelo);
+                    TotalAPagar();
+                    LimpiarTxtsCobrar();
+                    txtSKUCobrar.requestFocus();
+                }else{
+                    JOptionPane.showMessageDialog(null, "No hay stock para este producto.");
+                }
+            }else{
+                JOptionPane.showConfirmDialog(null, "Ingrese la cantidad a vender.");
+            }
+        }
+    }//GEN-LAST:event_txtCantidadCobrarKeyPressed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
@@ -1165,6 +1224,27 @@ public class Sistema extends javax.swing.JFrame {
         txtPrecioProducto.setText("");
     }
     
+    private void LimpiarTxtsCobrar(){
+        txtSKUCobrar.setText("");
+        txtProductoCobrar.setText("");
+        txtCantidadCobrar.setText("");
+        txtPrecioCobrar.setText("");
+        txtStockCobrar.setText("");
+    }
+    
+    private void TotalAPagar(){
+        total = 0.00;
+        int fila = tableCobrar.getRowCount();
+        for(int i = 0; i < fila; i++){
+            //Se parsea a tipo decimal, y posteriormente convertimos el object a string con valueOf
+            double calc = Double.parseDouble(String.valueOf(tableCobrar.getModel().getValueAt(i, 5)));
+            total = total + calc;
+        }
+        //Se le da el formato a 2 decimales.
+        lblTotal.setText(String.format("%.2f", total));
+    }
+    
+   
     /**
      * @param args the command line arguments
      */
@@ -1247,7 +1327,6 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedGlobal;
-    private javax.swing.JLabel labelTotal;
     private javax.swing.JLabel lblDireccionCliente;
     private javax.swing.JLabel lblIDCliente;
     private javax.swing.JLabel lblNombreCliente;
@@ -1258,6 +1337,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel lblSKU;
     private javax.swing.JLabel lblStockProducto;
     private javax.swing.JLabel lblTelefonoCliente;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tableCliente;
     private javax.swing.JTable tableCobrar;
     private javax.swing.JTable tableProducto;
