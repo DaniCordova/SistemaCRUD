@@ -106,4 +106,26 @@ public class ClienteUse {
             }
         }
     }
+    
+    public ClienteObject BuscarClienteCobro(int id){
+        ClienteObject cl = new ClienteObject();
+        String sql = "SELECT * FROM musichouse.clientes WHERE id = ?";
+        
+        try {
+            con = cn.getConnection();
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, id);
+            resultado = statement.executeQuery();
+            
+            if(resultado.next()){
+                cl.setNombre(resultado.getString("nombre"));
+                cl.setTelefono(resultado.getString("telefono"));
+                cl.setDireccion(resultado.getString("direccion"));
+                cl.setRazonS(resultado.getString("razonsocial"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return cl;
+    }
 }
