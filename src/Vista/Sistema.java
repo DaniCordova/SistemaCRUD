@@ -70,6 +70,7 @@ public class Sistema extends javax.swing.JFrame {
     public void ListadoDeClientes(){
         List<ClienteObject> ListarCl = usaCliente.ListarCliente();
         tablaModelo = (DefaultTableModel) tableCliente.getModel();
+        LimpiarTabla();
         Object[] obj = new Object[6];
         
         for(int i = 0; i < ListarCl.size(); i++){
@@ -419,6 +420,9 @@ public class Sistema extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCantidadCobrarKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadCobrarKeyTyped(evt);
+            }
         });
 
         txtStockCobrar.setEditable(false);
@@ -460,6 +464,9 @@ public class Sistema extends javax.swing.JFrame {
         txtIDClienteCobrar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtIDClienteCobrarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIDClienteCobrarKeyTyped(evt);
             }
         });
 
@@ -590,6 +597,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         txtTelefonoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTelefonoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoClienteKeyTyped(evt);
+            }
+        });
 
         tableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -711,6 +723,12 @@ public class Sistema extends javax.swing.JFrame {
         lblPrecioProducto.setText("Precio:");
 
         lblStockProducto.setText("Stock");
+
+        txtStockProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockProductoKeyTyped(evt);
+            }
+        });
 
         btnGuardarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Guardar.png"))); // NOI18N
         btnGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -906,6 +924,12 @@ public class Sistema extends javax.swing.JFrame {
         txtNombreProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreProveedorActionPerformed(evt);
+            }
+        });
+
+        txtTelefonoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoProveedorKeyTyped(evt);
             }
         });
 
@@ -1381,6 +1405,46 @@ public class Sistema extends javax.swing.JFrame {
         LimpiarTabla();
         ListadoDeVentas();
     }//GEN-LAST:event_btnVentasActionPerformed
+
+    private void txtCantidadCobrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadCobrarKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadCobrarKeyTyped
+
+    private void txtIDClienteCobrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDClienteCobrarKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIDClienteCobrarKeyTyped
+
+    private void txtTelefonoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoClienteKeyTyped
+       char c = evt.getKeyChar();
+        
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoClienteKeyTyped
+
+    private void txtStockProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockProductoKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtStockProductoKeyTyped
+
+    private void txtTelefonoProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoProveedorKeyTyped
+        char c = evt.getKeyChar();
+        
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoProveedorKeyTyped
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
