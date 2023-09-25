@@ -8,13 +8,13 @@ public class VentaObject {
     private int id;
     private int idCliente;
     private String cliente;
-    private String vendedor;
+    private int vendedor;
     private double total;
 
     public VentaObject() {
     }
 
-    public VentaObject(int id, int idCliente, String cliente, String vendedor, double total) {
+    public VentaObject(int id, int idCliente, String cliente, int vendedor, double total) {
         this.id = id;
         this.idCliente = idCliente;
         this.cliente = cliente;
@@ -46,11 +46,11 @@ public class VentaObject {
         this.cliente = cliente;
     }
 
-    public String getVendedor() {
+    public int getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(String vendedor) {
+    public void setVendedor(int vendedor) {
         this.vendedor = vendedor;
     }
 

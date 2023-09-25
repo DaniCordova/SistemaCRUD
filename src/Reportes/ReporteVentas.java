@@ -39,11 +39,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author danic
  */
 
-public class Excel {
-    public static void InventarioDeProductos() {
+public class ReporteVentas {
+    public static void ReporteDeVentas() {
  
         Workbook book = new XSSFWorkbook();
-        Sheet sheet = book.createSheet("Productos");
+        Sheet sheet = book.createSheet("Ventas");
  
         try {
             InputStream is = new FileInputStream("src/Resources/Logo musichouse.png");
@@ -72,11 +72,11 @@ public class Excel {
             Row filaTitulo = sheet.createRow(1);
             Cell celdaTitulo = filaTitulo.createCell(1);
             celdaTitulo.setCellStyle(tituloEstilo);
-            celdaTitulo.setCellValue("Reporte de Productos");
+            celdaTitulo.setCellValue("Reporte de Ventas");
  
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
  
-            String[] cabecera = new String[]{"SKU", "Nombre", "Proveedor", "Stock", "Precio"};
+            String[] cabecera = new String[]{"Id", "idCliente", "Nombre", "Vendedor", "Total", "Fecha"};
  
             CellStyle headerStyle = book.createCellStyle();
             headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
@@ -106,7 +106,7 @@ public class Excel {
             ResultSet rs;
             Connection conn = con.getConnection();
  
-            int numFilaDatos = 5;
+            int numFilaDatos = 6;
  
             CellStyle datosEstilo = book.createCellStyle();
             datosEstilo.setBorderBottom(BorderStyle.THIN);
@@ -114,7 +114,7 @@ public class Excel {
             datosEstilo.setBorderRight(BorderStyle.THIN);
             datosEstilo.setBorderBottom(BorderStyle.THIN);
  
-            ps = conn.prepareStatement("SELECT sku, nombre, proveedor, stock, precio FROM musichouse.productos");
+            ps = conn.prepareStatement("SELECT * FROM musichouse.ventas");
             rs = ps.executeQuery();
  
             int numCol = rs.getMetaData().getColumnCount();
@@ -138,21 +138,22 @@ public class Excel {
             sheet.autoSizeColumn(3);
             sheet.autoSizeColumn(4);
             sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
             
             sheet.setZoom(150);
-            String fileName = "productos";
+            String fileName = "ventas";
             String home = System.getProperty("user.home");
             File file = new File(home + "/Desktop/" + fileName + ".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();
             Desktop.getDesktop().open(file);
-            JOptionPane.showMessageDialog(null, "Reporte Generado");
+            JOptionPane.showMessageDialog(null, "Reporte de Ventas Generado");
  
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteSKU.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | SQLException ex) {
-            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteSKU.class.getName()).log(Level.SEVERE, null, ex);
         }
  
     }

@@ -13,9 +13,23 @@ import Modelo.ProveedorObject;
 import Modelo.ProveedorUse;
 import Modelo.VentaObject;
 import Modelo.VentaUse;
-import Reportes.Excel;
+import Reportes.ReporteSKU;
+import Reportes.ReporteVentas;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +54,7 @@ public class Sistema extends javax.swing.JFrame {
     
     
     DefaultTableModel tablaModelo = new DefaultTableModel();
+    DefaultTableModel tablaTmp = new DefaultTableModel();
     
     
     int item;
@@ -106,6 +121,22 @@ public class Sistema extends javax.swing.JFrame {
         tableProducto.setModel(tablaModelo);
     }
     
+    public void ListadoDeVentas(){
+        List<VentaObject> ListarVenta = usaVenta.ListarVenta();
+        tablaModelo = (DefaultTableModel) tableVentas.getModel();
+        Object[] obj = new Object[4];
+        
+        for(int i = 0; i < ListarVenta.size(); i++){
+            obj[0] = ListarVenta.get(i).getId();
+            obj[1] = ListarVenta.get(i).getIdCliente();
+            obj[2] = ListarVenta.get(i).getVendedor();
+            obj[3] = ListarVenta.get(i).getTotal();
+            
+            tablaModelo.addRow(obj);
+        }
+        tableVentas.setModel(tablaModelo);
+    }
+    
     public void LimpiarTabla(){
         for (int i = 0; i < tablaModelo.getRowCount(); i++){
             tablaModelo.removeRow(i);
@@ -116,7 +147,7 @@ public class Sistema extends javax.swing.JFrame {
     public void RegistrarVenta(){
         int idCliente = Integer.parseInt(txtIDClienteCobrar.getText());
         String cliente = txtNombreClienteCobrar.getText();
-        String vendedor = lblVendedor.getText();
+        int vendedor = Integer.parseInt(lblVendedor.getText());
         double monto = total;
         
         venta.setIdCliente(idCliente);
@@ -219,7 +250,7 @@ public class Sistema extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableVentas = new javax.swing.JTable();
-        btnPdfVentas = new javax.swing.JButton();
+        btnReporteDeVentas = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -254,6 +285,11 @@ public class Sistema extends javax.swing.JFrame {
         btnCobrar.setForeground(new java.awt.Color(0, 0, 0));
         btnCobrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Nueva venta.png"))); // NOI18N
         btnCobrar.setText("Cobrar");
+        btnCobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCobrarActionPerformed(evt);
+            }
+        });
 
         btnCliente.setBackground(new java.awt.Color(204, 204, 204));
         btnCliente.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -293,6 +329,11 @@ public class Sistema extends javax.swing.JFrame {
         btnVentas.setForeground(new java.awt.Color(0, 0, 0));
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Registro Ventas.png"))); // NOI18N
         btnVentas.setText("Ventas");
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Logo musichouse.png"))); // NOI18N
 
@@ -355,6 +396,8 @@ public class Sistema extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 140));
+
+        jTabbedGlobal.setInheritsPopupMenu(true);
 
         jLabel3.setText("SKU");
 
@@ -517,7 +560,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(btnAceptarCobro)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab1", jPanel2);
@@ -654,7 +697,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(btnEliminarCliente))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab2", jPanel3);
@@ -788,7 +831,7 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab4", jPanel5);
@@ -814,7 +857,12 @@ public class Sistema extends javax.swing.JFrame {
             tableVentas.getColumnModel().getColumn(3).setPreferredWidth(60);
         }
 
-        btnPdfVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/descargar-pdf.png"))); // NOI18N
+        btnReporteDeVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/excel.png"))); // NOI18N
+        btnReporteDeVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteDeVentasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -825,17 +873,17 @@ public class Sistema extends javax.swing.JFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1074, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnPdfVentas)))
+                        .addComponent(btnReporteDeVentas)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnPdfVentas)
                 .addGap(26, 26, 26)
+                .addComponent(btnReporteDeVentas)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab5", jPanel6);
@@ -986,12 +1034,12 @@ public class Sistema extends javax.swing.JFrame {
                         .addComponent(txtIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         jTabbedGlobal.addTab("tab3", jPanel4);
 
-        getContentPane().add(jTabbedGlobal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 1080, 500));
+        getContentPane().add(jTabbedGlobal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 1080, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1166,7 +1214,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void tableVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVentasMouseClicked
-        
+      
     }//GEN-LAST:event_tableVentasMouseClicked
 
     private void tableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductoMouseClicked
@@ -1214,7 +1262,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
     private void btnExcelProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelProductoActionPerformed
-        Excel.InventarioDeProductos();
+        ReporteSKU.InventarioDeProductos();
     }//GEN-LAST:event_btnExcelProductoActionPerformed
 
     private void txtSKUCobrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSKUCobrarKeyPressed
@@ -1250,7 +1298,7 @@ public class Sistema extends javax.swing.JFrame {
                 
                 if(stock >= cantidad){
                     item = item + 1;
-                    tablaModelo = (DefaultTableModel) tableCobrar.getModel();
+                    tablaTmp = (DefaultTableModel) tableCobrar.getModel();
                     
                     for(int i = 0; i < tableCobrar.getRowCount(); i++){
                         if(tableCobrar.getValueAt(i, 1).equals(txtProductoCobrar.getText())){
@@ -1275,8 +1323,8 @@ public class Sistema extends javax.swing.JFrame {
                     obj[4] = lista.get(4);
                     obj[5] = lista.get(5);
                     
-                    tablaModelo.addRow(obj);
-                    tableCobrar.setModel(tablaModelo);
+                    tablaTmp.addRow(obj);
+                    tableCobrar.setModel(tablaTmp);
                     TotalAPagar();
                     LimpiarTxtsCobrar();
                     txtSKUCobrar.requestFocus();
@@ -1314,7 +1362,25 @@ public class Sistema extends javax.swing.JFrame {
     private void btnAceptarCobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarCobroActionPerformed
         RegistrarVenta();
         RegistrarDetalleVenta();
+        ActualizarStock();
+        LimpiarTablaCobro();
+        txtIDClienteCobrar.setText("");
+        txtNombreClienteCobrar.setText("");
     }//GEN-LAST:event_btnAceptarCobroActionPerformed
+
+    private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
+        jTabbedGlobal.setSelectedIndex(0);
+    }//GEN-LAST:event_btnCobrarActionPerformed
+
+    private void btnReporteDeVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteDeVentasActionPerformed
+        ReporteVentas.ReporteDeVentas();
+    }//GEN-LAST:event_btnReporteDeVentasActionPerformed
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        jTabbedGlobal.setSelectedIndex(3);
+        LimpiarTabla();
+        ListadoDeVentas();
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     private void LimpiarTxtsCliente(){
         txtIDCliente.setText("");
@@ -1359,6 +1425,25 @@ public class Sistema extends javax.swing.JFrame {
         }
         //Se le da el formato a 2 decimales.
         lblTotal.setText(String.format("%.2f", total));
+    }
+    
+    private void ActualizarStock(){
+        for(int i = 0; i < tableCobrar.getRowCount(); i++){
+            String sku = tableCobrar.getValueAt(i, 1).toString();
+            int cantidad = Integer.parseInt(tableCobrar.getValueAt(i, 4).toString());
+            prod = usaProducto.BuscarProducto(sku);
+            int StockActual = prod.getStock() - cantidad;
+            usaVenta.ActualizarStock(StockActual, sku);
+        }
+    }
+    
+    private void LimpiarTablaCobro(){
+        tablaTmp = (DefaultTableModel) tableCobrar.getModel();        
+        int fila = tableCobrar.getRowCount();
+        
+        for(int i = 0; i < fila; i++){
+            tablaTmp.removeRow(0);
+        }
     }
     
    
@@ -1412,9 +1497,9 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarCliente;
     private javax.swing.JButton btnGuardarProducto;
     private javax.swing.JButton btnGuardarProveedor;
-    private javax.swing.JButton btnPdfVentas;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnReporteDeVentas;
     private javax.swing.JButton btnVentas;
     private javax.swing.JComboBox<String> cbxProveedorProducto;
     private javax.swing.JLabel jLabel1;
